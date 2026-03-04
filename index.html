@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRIS System - Architecture Documentation</title>
+    <meta name="description" content="Complete architecture documentation for HRIS System with Flutter Mobile, React Admin, and Laravel Backend">
+    
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/favicon.png">
+</head>
+<body class="light-mode">
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+    </button>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">HR</span>
+            </div>
+            <div class="logo-text">
+                <h1>HRIS System</h1>
+                <p>Architecture Docs</p>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#overview" class="nav-link active">Overview</a></li>
+                <li><a href="#architecture" class="nav-link">Folder Architecture</a></li>
+                <li><a href="#database" class="nav-link">Database Design</a></li>
+                <li><a href="#documentation" class="nav-link">Documentation</a></li>
+                <li><a href="#ui-guidelines" class="nav-link">UI Design Guidelines</a></li>
+                <li><a href="#security" class="nav-link">Security Structure</a></li>
+                <li><a href="#scalability" class="nav-link">Scalability</a></li>
+                
+                <li class="nav-divider">Implementation</li>
+                <li><a href="#impl-backend" class="nav-link">Backend Laravel</a></li>
+                <li><a href="#impl-flutter" class="nav-link">Flutter Mobile</a></li>
+                <li><a href="#impl-react" class="nav-link">React Admin</a></li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle sidebar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+    </button>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+        <!-- Overview Section -->
+        <section id="overview" class="doc-section active">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">System Overview</h2>
+                    <p class="section-description">A corporate HRIS (Human Resource Information System) designed for a single company with mobile attendance, admin management, and API-first architecture.</p>
+                </div>
+            </div>
+
+            <div class="grid-3">
+                <!-- Flutter Mobile Card -->
+                <div class="info-card">
+                    <div class="card-header">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                            <line x1="8" y1="22" x2="16" y2="22"/>
+                        </svg>
+                        <h3>Flutter Mobile App</h3>
+                    </div>
+                    <p class="card-description">Employee-facing mobile app for daily attendance with photo capture and GPS validation.</p>
+                    <ul class="feature-list">
+                        <li>Photo + GPS attendance</li>
+                        <li>Leave requests</li>
+                        <li>Profile management</li>
+                        <li>Push notifications</li>
+                    </ul>
+                </div>
+
+                <!-- React Admin Card -->
+                <div class="info-card">
+                    <div class="card-header">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                        <h3>React Admin Panel</h3>
+                    </div>
+                    <p class="card-description">Web dashboard for HR admins and managers to manage employees and view analytics.</p>
+                    <ul class="feature-list">
+                        <li>Employee CRUD</li>
+                        <li>Attendance reports</li>
+                        <li>Dashboard analytics</li>
+                        <li>Role-based views</li>
+                    </ul>
+                </div>
+
+                <!-- Laravel Backend Card -->
+                <div class="info-card">
+                    <div class="card-header">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                            <line x1="6" y1="6" x2="6" y2="6.01"/>
+                            <line x1="6" y1="18" x2="6" y2="18.01"/>
+                        </svg>
+                        <h3>Laravel API Backend</h3>
+                    </div>
+                    <p class="card-description">RESTful API backend handling authentication, data, and business logic.</p>
+                    <ul class="feature-list">
+                        <li>Sanctum token auth</li>
+                        <li>Role-based access</li>
+                        <li>API-first design</li>
+                        <li>Anti-cheat logic</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tech Stack Card -->
+            <div class="info-card">
+                <h3 class="card-title">Tech Stack</h3>
+                <div class="grid-4">
+                    <div>
+                        <span class="tech-label">Mobile</span>
+                        <p class="tech-value">Flutter 3.41.3</p>
+                    </div>
+                    <div>
+                        <span class="tech-label">Admin</span>
+                        <p class="tech-value">React 19</p>
+                    </div>
+                    <div>
+                        <span class="tech-label">Backend</span>
+                        <p class="tech-value">Laravel 12 (PHP 8.3)</p>
+                    </div>
+                    <div>
+                        <span class="tech-label">Database</span>
+                        <p class="tech-value">MySQL 8</p>
+                    </div>
+                    <div>
+                        <span class="tech-label">Auth</span>
+                        <p class="tech-value">Laravel Sanctum</p>
+                    </div>
+                    <div>
+                        <span class="tech-label">State (Mobile)</span>
+                        <p class="tech-value">Provider / Riverpod</p>
+                    </div>
+                    <div>
+                        <span class="tech-label">State (Admin)</span>
+                        <p class="tech-value">Context + SWR</p>
+                    </div>
+                    <div>
+                        <span class="tech-label">Deployment</span>
+                        <p class="tech-value">VPS / Nginx</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Flow Card -->
+            <div class="info-card">
+                <h3 class="card-title">System Flow</h3>
+                <div class="flow-diagram">
+                    <span class="flow-node">Employee (Mobile)</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-node">REST API</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-node">Laravel Backend</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-node">MySQL DB</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-node">Admin Panel</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Section -->
+        <section id="architecture" class="doc-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7l-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">Folder Architecture</h2>
+                    <p class="section-description">Complete folder structures for all three sub-projects following clean architecture principles.</p>
+                </div>
+            </div>
+
+            <!-- Root Structure -->
+            <div class="subsection">
+                <h3 class="subsection-title">Root Project Structure</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>hris-system/</span>
+                    </div>
+                    <pre><code>hris-system/
+├── mobile_flutter/          # Flutter mobile app (employee-facing)
+├── admin-react/             # React admin dashboard (HR/Manager)
+├── backend-laravel/         # Laravel API backend
+│
+├── docs/
+│   ├── ERD.png              # Entity Relationship Diagram
+│   ├── UseCaseDiagram.png   # Use Case Diagram
+│   └── API-Documentation.md # Full API reference
+│
+├── README.md                # Project overview & quick start
+├── SETUP.md                 # Environment setup instructions
+├── ARCHITECTURE.md          # System architecture explanation
+└── DEPLOYMENT.md            # Production deployment guide</code></pre>
+                </div>
+                <div class="info-card info-info">
+                    <p>The monorepo structure keeps all three sub-projects in one repository for easier version control, cross-referencing, and deployment coordination. Each sub-project is self-contained with its own dependency management.</p>
+                </div>
+            </div>
+
+            <!-- Flutter Structure -->
+            <div class="subsection">
+                <h3 class="subsection-title">Flutter Mobile App Structure</h3>
+                <div class="info-card info-info">
+                    <h4 class="info-title">Architecture Pattern: MVVM (Model-View-ViewModel)</h4>
+                    <p>The Flutter app uses MVVM with Provider for state management. This provides a clean separation between UI, business logic, and data layers. Consider migrating to Riverpod for more advanced dependency injection.</p>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>mobile_flutter/</span>
+                    </div>
+                    <pre><code>mobile_flutter/
+├── android/                    # Android platform config
+├── ios/                        # iOS platform config
+├── assets/
+│   ├── images/                 # Static images, splash
+│   ├── icons/                  # App icons
+│   └── fonts/                  # Custom fonts
+│
+├── lib/
+│   ├── main.dart               # App entry point
+│   │
+│   ├── core/
+│   │   ├── constants/
+│   │   │   ├── app_colors.dart
+│   │   │   ├── app_strings.dart
+│   │   │   ├── api_endpoints.dart
+│   │   │   └── app_config.dart
+│   │   ├── utils/
+│   │   │   ├── date_formatter.dart
+│   │   │   ├── validators.dart
+│   │   │   ├── location_helper.dart
+│   │   │   └── image_helper.dart
+│   │   └── errors/
+│   │       ├── exceptions.dart
+│   │       └── failure.dart
+│   │
+│   ├── data/
+│   │   ├── models/
+│   │   │   ├── user_model.dart
+│   │   │   ├── attendance_model.dart
+│   │   │   ├── leave_model.dart
+│   │   │   └── department_model.dart
+│   │   ├── repositories/
+│   │   │   ├── auth_repository.dart
+│   │   │   ├── attendance_repository.dart
+│   │   │   ├── leave_repository.dart
+│   │   │   └── profile_repository.dart
+│   │   └── datasources/
+│   │       ├── remote/
+│   │       │   └── api_client.dart
+│   │       └── local/
+│   │           └── local_storage.dart
+│   │
+│   ├── providers/
+│   │   ├── auth_provider.dart
+│   │   ├── attendance_provider.dart
+│   │   ├── leave_provider.dart
+│   │   └── theme_provider.dart
+│   │
+│   ├── screens/
+│   │   ├── splash/
+│   │   │   └── splash_screen.dart
+│   │   ├── auth/
+│   │   │   ├── login_screen.dart
+│   │   │   └── forgot_password_screen.dart
+│   │   ├── home/
+│   │   │   └── home_screen.dart
+│   │   ├── attendance/
+│   │   │   ├── check_in_screen.dart
+│   │   │   ├── check_out_screen.dart
+│   │   │   └── attendance_history.dart
+│   │   ├── leave/
+│   │   │   ├── leave_request_screen.dart
+│   │   │   └── leave_history_screen.dart
+│   │   └── profile/
+│   │       └── profile_screen.dart
+│   │
+│   ├── widgets/
+│   │   ├── common/
+│   │   │   ├── custom_button.dart
+│   │   │   ├── custom_input.dart
+│   │   │   ├── loading_indicator.dart
+│   │   │   └── error_widget.dart
+│   │   └── attendance/
+│   │       ├── camera_preview.dart
+│   │       └── location_badge.dart
+│   │
+│   ├── theme/
+│   │   ├── app_theme.dart
+│   │   ├── light_theme.dart
+│   │   └── dark_theme.dart
+│   │
+│   └── routes/
+│       └── app_routes.dart
+│
+├── test/
+├── pubspec.yaml
+└── analysis_options.yaml</code></pre>
+                </div>
+                <div class="info-card info-success">
+                    <h4 class="info-title">State Management</h4>
+                    <p><strong>Recommended:</strong> Provider (simple) or Riverpod (advanced). The app uses ChangeNotifier-based providers for authentication state, attendance data, and theme toggling. Each provider maps to a specific domain concern for clean separation.</p>
+                </div>
+            </div>
+
+            <!-- React Structure -->
+            <div class="subsection">
+                <h3 class="subsection-title">React Admin Panel Structure</h3>
+                <div class="info-card info-info">
+                    <h4 class="info-title">Architecture: Component-Based with Context API</h4>
+                    <p>Modern React 19 functional components with hooks. Uses Context API for global state (auth, theme) and SWR for data fetching/caching. Feature-based folder organization for scalability.</p>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>admin-react/</span>
+                    </div>
+                    <pre><code>admin-react/
+├── public/
+│   ├── favicon.ico
+│   └── index.html
+│
+├── src/
+│   ├── index.js
+│   ├── App.jsx
+│   │
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Button.jsx
+│   │   │   ├── Input.jsx
+│   │   │   ├── Modal.jsx
+│   │   │   ├── DataTable.jsx
+│   │   │   ├── Pagination.jsx
+│   │   │   ├── LoadingSpinner.jsx
+│   │   │   └── ErrorBoundary.jsx
+│   │   ├── charts/
+│   │   │   ├── AttendanceChart.jsx
+│   │   │   ├── DepartmentChart.jsx
+│   │   │   └── LeaveChart.jsx
+│   │   └── forms/
+│   │       ├── EmployeeForm.jsx
+│   │       ├── DepartmentForm.jsx
+│   │       └── LeaveApprovalForm.jsx
+│   │
+│   ├── layouts/
+│   │   ├── MainLayout.jsx
+│   │   ├── AuthLayout.jsx
+│   │   ├── Sidebar.jsx
+│   │   └── Header.jsx
+│   │
+│   ├── pages/
+│   │   ├── Dashboard.jsx
+│   │   ├── Login.jsx
+│   │   ├── employees/
+│   │   │   ├── EmployeeList.jsx
+│   │   │   ├── EmployeeDetail.jsx
+│   │   │   └── EmployeeCreate.jsx
+│   │   ├── attendance/
+│   │   │   ├── AttendanceList.jsx
+│   │   │   └── AttendanceReport.jsx
+│   │   ├── departments/
+│   │   │   ├── DepartmentList.jsx
+│   │   │   └── DepartmentDetail.jsx
+│   │   ├── leaves/
+│   │   │   ├── LeaveList.jsx
+│   │   │   └── LeaveApproval.jsx
+│   │   └── settings/
+│   │       └── Settings.jsx
+│   │
+│   ├── hooks/
+│   │   ├── useAuth.js
+│   │   ├── useFetch.js
+│   │   ├── useTheme.js
+│   │   └── usePermission.js
+│   │
+│   ├── services/
+│   │   ├── api.js
+│   │   ├── authService.js
+│   │   ├── employeeService.js
+│   │   ├── attendanceService.js
+│   │   ├── departmentService.js
+│   │   └── leaveService.js
+│   │
+│   ├── context/
+│   │   ├── AuthContext.jsx
+│   │   └── ThemeContext.jsx
+│   │
+│   ├── utils/
+│   │   ├── formatDate.js
+│   │   ├── formatCurrency.js
+│   │   ├── roleGuard.js
+│   │   └── constants.js
+│   │
+│   └── theme/
+│       ├── colors.js
+│       ├── lightTheme.js
+│       └── darkTheme.js
+│
+├── package.json
+├── .env.example
+└── README.md</code></pre>
+                </div>
+                <div class="info-card info-success">
+                    <h4 class="info-title">Dark/Light Toggle</h4>
+                    <p>ThemeContext wraps the entire app with a toggle stored in localStorage. All components read theme tokens from the context. CSS custom properties switch between light and dark palettes seamlessly.</p>
+                </div>
+            </div>
+
+            <!-- Laravel Structure -->
+            <div class="subsection">
+                <h3 class="subsection-title">Laravel Backend Structure</h3>
+                <div class="info-card info-info">
+                    <h4 class="info-title">Architecture: API-First with Service Layer Pattern</h4>
+                    <p>The backend follows API-first architecture. No Blade views are served. All responses are JSON. The optional repository pattern adds a data abstraction layer, while the service layer encapsulates business logic away from controllers.</p>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>backend-laravel/</span>
+                    </div>
+                    <pre><code>backend-laravel/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   └── Api/
+│   │   │       ├── AuthController.php
+│   │   │       ├── EmployeeController.php
+│   │   │       ├── AttendanceController.php
+│   │   │       ├── DepartmentController.php
+│   │   │       ├── LeaveController.php
+│   │   │       ├── DashboardController.php
+│   │   │       └── ProfileController.php
+│   │   │
+│   │   ├── Middleware/
+│   │   │   ├── RoleMiddleware.php
+│   │   │   ├── EnsureApiJson.php
+│   │   │   └── AttendanceThrottle.php
+│   │   │
+│   │   ├── Requests/
+│   │   │   ├── LoginRequest.php
+│   │   │   ├── StoreEmployeeRequest.php
+│   │   │   ├── UpdateEmployeeRequest.php
+│   │   │   ├── CheckInRequest.php
+│   │   │   ├── CheckOutRequest.php
+│   │   │   └── LeaveRequest.php
+│   │   │
+│   │   └── Resources/
+│   │       ├── EmployeeResource.php
+│   │       ├── AttendanceResource.php
+│   │       ├── DepartmentResource.php
+│   │       ├── LeaveResource.php
+│   │       └── UserResource.php
+│   │
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Employee.php
+│   │   ├── Attendance.php
+│   │   ├── Department.php
+│   │   ├── Leave.php
+│   │   └── Role.php
+│   │
+│   ├── Services/
+│   │   ├── AuthService.php
+│   │   ├── AttendanceService.php
+│   │   ├── EmployeeService.php
+│   │   ├── LeaveService.php
+│   │   └── DashboardService.php
+│   │
+│   ├── Repositories/
+│   │   ├── EmployeeRepository.php
+│   │   ├── AttendanceRepository.php
+│   │   └── BaseRepository.php
+│   │
+│   ├── Policies/
+│   │   ├── EmployeePolicy.php
+│   │   ├── AttendancePolicy.php
+│   │   └── LeavePolicy.php
+│   │
+│   └── Enums/
+│       ├── RoleEnum.php
+│       ├── LeaveStatusEnum.php
+│       └── AttendanceStatusEnum.php
+│
+├── database/
+│   ├── migrations/
+│   │   ├── create_roles_table.php
+│   │   ├── create_departments_table.php
+│   │   ├── create_employees_table.php
+│   │   ├── create_attendances_table.php
+│   │   └── create_leaves_table.php
+│   ├── seeders/
+│   │   ├── RoleSeeder.php
+│   │   ├── DepartmentSeeder.php
+│   │   └── AdminUserSeeder.php
+│   └── factories/
+│       ├── EmployeeFactory.php
+│       └── AttendanceFactory.php
+│
+├── routes/
+│   └── api.php
+│
+├── config/
+│   ├── sanctum.php
+│   ├── cors.php
+│   └── attendance.php
+│
+├── storage/
+│   └── app/
+│       └── attendance_photos/
+│
+├── .env.example
+├── README.md
+└── composer.json</code></pre>
+                </div>
+                <div class="info-card info-success">
+                    <h4 class="info-title">API-First Architecture</h4>
+                    <p><strong>Controller:</strong> Handles HTTP request/response only. Delegates to Services.<br>
+                    <strong>Service:</strong> Contains business logic (attendance anti-cheat, leave approval rules).<br>
+                    <strong>Repository:</strong> Optional data access abstraction for complex queries.<br>
+                    <strong>Request:</strong> Validates incoming data before reaching the controller.<br>
+                    <strong>Resource:</strong> Transforms Eloquent models into consistent JSON responses.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Database Section -->
+        <section id="database" class="doc-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">Database Design</h2>
+                    <p class="section-description">MySQL 8 relational database with normalized tables, foreign keys, and constraints for data integrity.</p>
+                </div>
+            </div>
+
+            <!-- ERD -->
+            <div class="subsection">
+                <h3 class="subsection-title">ERD & Relationships</h3>
+                <div class="info-card">
+                    <h4 class="info-title">Entity Relationship Overview</h4>
+                    <pre class="erd-diagram"><code>    ┌──────────┐     ┌──────────────┐     ┌──────────────┐
+    │  roles   │     │  departments │     │    users     │
+    │──────────│     │──────────────│     │──────────────│
+    │ id (PK)  │     │ id (PK)      │     │ id (PK)      │
+    │ name     │     │ name         │     │ email        │
+    │ guard    │     │ code         │     │ password     │
+    └────┬─────┘     │ head_id (FK) │     │ role_id (FK) │
+         │           └──────┬───────┘     └──────┬───────┘
+         │                  │                    │
+         │           ┌──────┴───────┐            │
+         └──────────>│  employees   │<───────────┘
+                     │──────────────│
+                     │ id (PK)      │
+                     │ user_id (FK) │
+                     │ dept_id (FK) │
+                     │ employee_no  │
+                     │ name, phone  │
+                     │ position     │
+                     │ hire_date    │
+                     └──────┬───────┘
+                            │
+              ┌─────────────┼─────────────┐
+              │                           │
+       ┌──────┴───────┐          ┌────────┴─────┐
+       │ attendances  │          │   leaves     │
+       │──────────────│          │──────────────│
+       │ id (PK)      │          │ id (PK)      │
+       │ employee_id  │          │ employee_id  │
+       │ date         │          │ type         │
+       │ check_in     │          │ start_date   │
+       │ check_out    │          │ end_date     │
+       │ photo_path   │          │ status       │
+       │ latitude     │          │ approved_by  │
+       │ longitude    │          │ reason       │
+       │ status       │          └──────────────┘
+       └──────────────┘</code></pre>
+                </div>
+                <div class="info-card info-info">
+                    <h4 class="info-title">Key Relationships</h4>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>users -- roles:</strong> Many-to-One. Each user has one role (admin, hr, manager, employee).</li>
+                        <li><strong>employees -- users:</strong> One-to-One. Each employee links to a user account for authentication.</li>
+                        <li><strong>employees -- departments:</strong> Many-to-One. Each employee belongs to one department.</li>
+                        <li><strong>departments.head_id -- employees:</strong> Self-referencing FK. Department head is an employee.</li>
+                        <li><strong>attendances -- employees:</strong> Many-to-One. Each attendance record links to one employee.</li>
+                        <li><strong>leaves -- employees:</strong> Many-to-One. Leave requests reference the requesting employee.</li>
+                        <li><strong>leaves.approved_by -- users:</strong> FK to users table for the approving manager/HR.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Table Definitions -->
+            <div class="subsection">
+                <h3 class="subsection-title">Table Definitions</h3>
+                
+                <div class="table-container">
+                    <h4 class="table-name">roles</h4>
+                    <table class="schema-table">
+                        <thead>
+                            <tr>
+                                <th>Column</th>
+                                <th>Type</th>
+                                <th>Constraints</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>id</td><td>BIGINT UNSIGNED</td><td>PK, AUTO_INCREMENT</td></tr>
+                            <tr><td>name</td><td>VARCHAR(50)</td><td>UNIQUE, NOT NULL</td></tr>
+                            <tr><td>guard_name</td><td>VARCHAR(50)</td><td>DEFAULT 'api'</td></tr>
+                            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td></tr>
+                            <tr><td>updated_at</td><td>TIMESTAMP</td><td>ON UPDATE CURRENT_TIMESTAMP</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-container">
+                    <h4 class="table-name">departments</h4>
+                    <table class="schema-table">
+                        <thead>
+                            <tr>
+                                <th>Column</th>
+                                <th>Type</th>
+                                <th>Constraints</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>id</td><td>BIGINT UNSIGNED</td><td>PK, AUTO_INCREMENT</td></tr>
+                            <tr><td>name</td><td>VARCHAR(100)</td><td>UNIQUE, NOT NULL</td></tr>
+                            <tr><td>code</td><td>VARCHAR(10)</td><td>UNIQUE, NOT NULL</td></tr>
+                            <tr><td>description</td><td>TEXT</td><td>NULLABLE</td></tr>
+                            <tr><td>head_id</td><td>BIGINT UNSIGNED</td><td>FK -> employees.id, NULLABLE</td></tr>
+                            <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT true</td></tr>
+                            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td></tr>
+                            <tr><td>updated_at</td><td>TIMESTAMP</td><td>ON UPDATE CURRENT_TIMESTAMP</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-container">
+                    <h4 class="table-name">users</h4>
+                    <table class="schema-table">
+                        <thead>
+                            <tr>
+                                <th>Column</th>
+                                <th>Type</th>
+                                <th>Constraints</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>id</td><td>BIGINT UNSIGNED</td><td>PK, AUTO_INCREMENT</td></tr>
+                            <tr><td>email</td><td>VARCHAR(255)</td><td>UNIQUE, NOT NULL</td></tr>
+                            <tr><td>password</td><td>VARCHAR(255)</td><td>NOT NULL (bcrypt)</td></tr>
+                            <tr><td>role_id</td><td>BIGINT UNSIGNED</td><td>FK -> roles.id, NOT NULL</td></tr>
+                            <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT true</td></tr>
+                            <tr><td>email_verified_at</td><td>TIMESTAMP</td><td>NULLABLE</td></tr>
+                            <tr><td>remember_token</td><td>VARCHAR(100)</td><td>NULLABLE</td></tr>
+                            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td></tr>
+                            <tr><td>updated_at</td><td>TIMESTAMP</td><td>ON UPDATE CURRENT_TIMESTAMP</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-container">
+                    <h4 class="table-name">employees</h4>
+                    <table class="schema-table">
+                        <thead>
+                            <tr>
+                                <th>Column</th>
+                                <th>Type</th>
+                                <th>Constraints</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>id</td><td>BIGINT UNSIGNED</td><td>PK, AUTO_INCREMENT</td></tr>
+                            <tr><td>user_id</td><td>BIGINT UNSIGNED</td><td>FK -> users.id, UNIQUE</td></tr>
+                            <tr><td>department_id</td><td>BIGINT UNSIGNED</td><td>FK -> departments.id</td></tr>
+                            <tr><td>employee_no</td><td>VARCHAR(20)</td><td>UNIQUE, NOT NULL</td></tr>
+                            <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td></tr>
+                            <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td></tr>
+                            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td></tr>
+                            <tr><td>position</td><td>VARCHAR(100)</td><td>NOT NULL</td></tr>
+                            <tr><td>hire_date</td><td>DATE</td><td>NOT NULL</td></tr>
+                            <tr><td>address</td><td>TEXT</td><td>NULLABLE</td></tr>
+                            <tr><td>photo_url</td><td>VARCHAR(255)</td><td>NULLABLE</td></tr>
+                            <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT true</td></tr>
+                            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td></tr>
+                            <tr><td>updated_at</td><td>TIMESTAMP</td><td>ON UPDATE CURRENT_TIMESTAMP</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-container">
+                    <h4 class="table-name">attendances</h4>
+                    <table class="schema-table">
+                        <thead>
+                            <tr>
+                                <th>Column</th>
+                                <th>Type</th>
+                                <th>Constraints</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>id</td><td>BIGINT UNSIGNED</td><td>PK, AUTO_INCREMENT</td></tr>
+                            <tr><td>employee_id</td><td>BIGINT UNSIGNED</td><td>FK -> employees.id</td></tr>
+                            <tr><td>date</td><td>DATE</td><td>NOT NULL</td></tr>
+                            <tr><td>check_in_time</td><td>DATETIME</td><td>NOT NULL</td></tr>
+                            <tr><td>check_out_time</td><td>DATETIME</td><td>NULLABLE</td></tr>
+                            <tr><td>check_in_photo</td><td>VARCHAR(255)</td><td>NOT NULL (file path)</td></tr>
+                            <tr><td>check_out_photo</td><td>VARCHAR(255)</td><td>NULLABLE</td></tr>
+                            <tr><td>check_in_lat</td><td>DECIMAL(10,8)</td><td>NOT NULL</td></tr>
+                            <tr><td>check_in_lng</td><td>DECIMAL(11,8)</td><td>NOT NULL</td></tr>
+                            <tr><td>check_out_lat</td><td>DECIMAL(10,8)</td><td>NULLABLE</td></tr>
+                            <tr><td>check_out_lng</td><td>DECIMAL(11,8)</td><td>NULLABLE</td></tr>
+                            <tr><td>status</td><td>ENUM</td><td>'present','late','absent','half_day'</td></tr>
+                            <tr><td>notes</td><td>TEXT</td><td>NULLABLE</td></tr>
+                            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td></tr>
+                            <tr><td>updated_at</td><td>TIMESTAMP</td><td>ON UPDATE CURRENT_TIMESTAMP</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-container">
+                    <h4 class="table-name">leaves</h4>
+                    <table class="schema-table">
+                        <thead>
+                            <tr>
+                                <th>Column</th>
+                                <th>Type</th>
+                                <th>Constraints</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>id</td><td>BIGINT UNSIGNED</td><td>PK, AUTO_INCREMENT</td></tr>
+                            <tr><td>employee_id</td><td>BIGINT UNSIGNED</td><td>FK -> employees.id</td></tr>
+                            <tr><td>type</td><td>ENUM</td><td>'annual','sick','personal','maternity','other'</td></tr>
+                            <tr><td>start_date</td><td>DATE</td><td>NOT NULL</td></tr>
+                            <tr><td>end_date</td><td>DATE</td><td>NOT NULL</td></tr>
+                            <tr><td>reason</td><td>TEXT</td><td>NOT NULL</td></tr>
+                            <tr><td>status</td><td>ENUM</td><td>'pending','approved','rejected'</td></tr>
+                            <tr><td>approved_by</td><td>BIGINT UNSIGNED</td><td>FK -> users.id, NULLABLE</td></tr>
+                            <tr><td>approved_at</td><td>DATETIME</td><td>NULLABLE</td></tr>
+                            <tr><td>rejection_reason</td><td>TEXT</td><td>NULLABLE</td></tr>
+                            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td></tr>
+                            <tr><td>updated_at</td><td>TIMESTAMP</td><td>ON UPDATE CURRENT_TIMESTAMP</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-card">
+                    <h4 class="info-title">Important Indexes</h4>
+                    <div class="code-block">
+                        <pre><code>-- Performance indexes
+CREATE UNIQUE INDEX idx_attendance_employee_date ON attendances (employee_id, date);
+CREATE INDEX idx_attendance_date ON attendances (date);
+CREATE INDEX idx_leaves_employee ON leaves (employee_id);
+CREATE INDEX idx_leaves_status ON leaves (status);
+CREATE INDEX idx_employees_department ON employees (department_id);
+CREATE INDEX idx_employees_employee_no ON employees (employee_no);</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Anti-Cheat Rules -->
+            <div class="subsection">
+                <h3 class="subsection-title">Anti-Cheat Rules</h3>
+                <div class="grid-2">
+                    <div class="info-card info-warning">
+                        <h4 class="info-title">1. One Check-In Per Day</h4>
+                        <p class="mb-3">A UNIQUE composite index on <code class="inline-code">employee_id + date</code> prevents duplicate check-ins at the database level.</p>
+                        <div class="code-block">
+                            <pre><code>// AttendanceService.php
+public function checkIn(Employee $employee, array $data): Attendance
+{
+    // DB constraint: UNIQUE(employee_id, date)
+    $existing = Attendance::where('employee_id', $employee->id)
+        ->whereDate('date', today())
+        ->first();
+
+    if ($existing) {
+        throw new AlreadyCheckedInException(
+            'You have already checked in today.'
+        );
+    }
+
+    return Attendance::create([...]);
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="info-card info-warning">
+                        <h4 class="info-title">2. Location Radius Validation</h4>
+                        <p class="mb-3">GPS coordinates are validated against the office location using the Haversine formula. Default radius: 200 meters.</p>
+                        <div class="code-block">
+                            <pre><code>// config/attendance.php
+return [
+    'office_latitude' => env('OFFICE_LAT', -6.2088),
+    'office_longitude' => env('OFFICE_LNG', 106.8456),
+    'max_radius_meters' => env('ATTENDANCE_RADIUS', 200),
+];
+
+// AttendanceService.php
+private function validateLocation(float $lat, float $lng): bool
+{
+    $distance = $this->haversineDistance(
+        $lat, $lng,
+        config('attendance.office_latitude'),
+        config('attendance.office_longitude')
+    );
+
+    return $distance <= config('attendance.max_radius_meters');
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="info-card info-warning">
+                        <h4 class="info-title">3. Duplicate Prevention</h4>
+                        <p class="mb-3">Rate limiting middleware prevents rapid successive requests. Combined with the unique DB constraint for bulletproof protection.</p>
+                        <div class="code-block">
+                            <pre><code>// AttendanceThrottle middleware
+Route::middleware(['auth:sanctum', 'throttle:attendance'])
+    ->group(function () {
+        Route::post('/check-in', [AttendanceController::class, 'checkIn']);
+        Route::post('/check-out', [AttendanceController::class, 'checkOut']);
+    });
+
+// RouteServiceProvider
+RateLimiter::for('attendance', function (Request $request) {
+    return Limit::perMinute(3)->by($request->user()->id);
+});</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="info-card info-warning">
+                        <h4 class="info-title">4. GPS Spoofing Mitigation</h4>
+                        <p class="mb-3">Basic client-side checks combined with server-side anomaly detection for mock location prevention.</p>
+                        <div class="code-block">
+                            <pre><code>// Flutter: Check for mock location
+import 'package:geolocator/geolocator.dart';
+
+Future<bool> isMockLocation(Position position) async {
+  if (Platform.isAndroid) {
+    return position.isMocked;
+  }
+  return false;
+}
+
+// Server: Flag suspicious patterns
+// - Coordinates exactly matching previous day
+// - Impossible travel speed between records
+// - Coordinates with suspiciously round numbers</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Documentation Section -->
+        <section id="documentation" class="doc-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">Documentation Structure</h2>
+                    <p class="section-description">Comprehensive documentation outlines for all project READMEs and guides.</p>
+                </div>
+            </div>
+
+            <!-- Root README -->
+            <div class="subsection">
+                <h3 class="subsection-title">Root README.md</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>README.md - Content Outline</span>
+                    </div>
+                    <pre><code># HRIS System - Human Resource Information System
+
+## Overview
+Corporate HRIS system for managing employees, attendance tracking with
+photo + GPS verification, leave management, and HR analytics dashboard.
+
+## Tech Stack
+| Component       | Technology              |
+|-----------------|-------------------------|
+| Mobile App      | Flutter 3.41.3          |
+| Admin Panel     | React 19                |
+| Backend API     | Laravel 12 (PHP 8.3)   |
+| Database        | MySQL 8                 |
+| Authentication  | Laravel Sanctum         |
+| Deployment      | VPS + Nginx             |
+
+## Architecture Overview
+This system uses an API-first monorepo architecture:
+- mobile_flutter/ - Employee-facing mobile app
+- admin-react/   - HR admin web dashboard
+- backend-laravel/ - Central REST API server
+
+## System Flow
+Employee Mobile App --> REST API --> Laravel Backend --> MySQL
+Admin Dashboard    --> REST API --> Laravel Backend --> MySQL
+
+## Features
+- Employee management (CRUD)
+- Attendance with photo capture + GPS validation
+- Leave request & approval workflow
+- Role-based access control (Admin, HR, Manager, Employee)
+- Dashboard with analytics charts
+- Anti-cheat attendance validation
+- Dark/Light theme support
+
+## Screenshots
+[placeholder for screenshots]
+
+## Quick Links
+- [Setup Guide](./SETUP.md)
+- [Architecture Details](./ARCHITECTURE.md)
+- [Deployment Guide](./DEPLOYMENT.md)
+- [API Documentation](./docs/API-Documentation.md)</code></pre>
+                </div>
+            </div>
+
+            <!-- SETUP.md -->
+            <div class="subsection">
+                <h3 class="subsection-title">SETUP.md</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>SETUP.md - Content Outline</span>
+                    </div>
+                    <pre><code># Environment Setup Guide
+
+## Prerequisites
+- PHP 8.3 + Composer
+- Node.js 20+ & npm
+- Flutter 3.41.3
+- MySQL 8
+- Git
+
+## Environment Variables
+
+### Backend (.env)
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=hris_db
+DB_USERNAME=root
+DB_PASSWORD=
+
+SANCTUM_STATEFUL_DOMAINS=localhost:3000
+CORS_ALLOWED_ORIGINS=http://localhost:3000
+
+OFFICE_LAT=-6.2088
+OFFICE_LNG=106.8456
+ATTENDANCE_RADIUS=200
+
+### Admin React (.env)
+REACT_APP_API_URL=http://localhost:8000/api
+REACT_APP_NAME=HRIS Admin
+
+### Flutter (lib/core/constants/app_config.dart)
+static const String baseUrl = 'http://10.0.2.2:8000/api'; // Android emulator
+static const String baseUrlIos = 'http://localhost:8000/api';
+
+## Database Setup
+1. Create MySQL database: CREATE DATABASE hris_db;
+2. Run migrations: php artisan migrate
+3. Run seeders: php artisan db:seed
+
+## Running the Backend
+cd backend-laravel
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve
+
+## Running the Admin Panel
+cd admin-react
+npm install
+cp .env.example .env
+npm start
+
+## Running the Mobile App
+cd mobile_flutter
+flutter pub get
+flutter run</code></pre>
+                </div>
+            </div>
+
+            <!-- DEPLOYMENT.md -->
+            <div class="subsection">
+                <h3 class="subsection-title">DEPLOYMENT.md</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>DEPLOYMENT.md - Content Outline</span>
+                    </div>
+                    <pre><code># Deployment Guide
+
+## 1. Backend VPS Deployment
+
+### Server Requirements
+- Ubuntu 22.04+ LTS
+- PHP 8.3 + php-fpm
+- MySQL 8
+- Nginx
+- Composer
+- Supervisor (for queues)
+- Certbot (SSL)
+
+### Deployment Steps
+1. Clone repo to /var/www/hris
+2. Install dependencies: composer install --no-dev
+3. Configure .env with production values
+4. Run migrations: php artisan migrate --force
+5. Optimize: php artisan config:cache && php artisan route:cache
+6. Set permissions: chown -R www-data:www-data storage bootstrap/cache
+
+### Nginx Configuration Structure
+server {
+    listen 80;
+    server_name api.yourdomain.com;
+    root /var/www/hris/backend-laravel/public;
+
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \\.php$ {
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+}
+
+## 2. React Admin Production Build
+cd admin-react
+npm run build
+# Deploy build/ folder to Nginx or CDN
+
+### Nginx for Admin SPA
+server {
+    listen 80;
+    server_name admin.yourdomain.com;
+    root /var/www/hris/admin-react/build;
+
+    location / {
+        try_files $uri /index.html;
+    }
+}
+
+## 3. Flutter APK Release
+
+### Generate Release APK
+cd mobile_flutter
+flutter build apk --release
+
+### Generate App Bundle (Play Store)
+flutter build appbundle --release
+
+### Output locations
+build/app/outputs/flutter-apk/app-release.apk
+build/app/outputs/bundle/release/app-release.aab
+
+## 4. Environment Variable Configuration
+
+### Production Checklist
+- [ ] APP_ENV=production
+- [ ] APP_DEBUG=false
+- [ ] Unique APP_KEY generated
+- [ ] Database credentials secured
+- [ ] CORS configured for production domains
+- [ ] SSL certificates installed
+- [ ] Queue worker running via Supervisor
+- [ ] Log rotation configured</code></pre>
+                </div>
+            </div>
+
+            <!-- Backend README -->
+            <div class="subsection">
+                <h3 class="subsection-title">Backend README</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>backend-laravel/README.md</span>
+                    </div>
+                    <pre><code># HRIS Backend API
+
+## API Endpoints
+
+### Authentication
+POST   /api/auth/login          # Login, returns Sanctum token
+POST   /api/auth/logout         # Revoke current token
+GET    /api/auth/me             # Get authenticated user
+
+### Employees
+GET    /api/employees           # List (paginated, filterable)
+POST   /api/employees           # Create new employee
+GET    /api/employees/{id}      # Get employee detail
+PUT    /api/employees/{id}      # Update employee
+DELETE /api/employees/{id}      # Soft delete employee
+
+### Attendance
+POST   /api/attendance/check-in # Check in (photo + GPS)
+POST   /api/attendance/check-out # Check out (photo + GPS)
+GET    /api/attendance           # List attendance records
+GET    /api/attendance/today     # Today's status
+GET    /api/attendance/report    # Monthly report
+
+### Departments
+GET    /api/departments          # List departments
+POST   /api/departments          # Create department
+PUT    /api/departments/{id}     # Update department
+
+### Leaves
+GET    /api/leaves               # List leave requests
+POST   /api/leaves               # Submit leave request
+PUT    /api/leaves/{id}/approve  # Approve (HR/Manager)
+PUT    /api/leaves/{id}/reject   # Reject (HR/Manager)
+
+### Dashboard
+GET    /api/dashboard/stats      # Summary statistics
+GET    /api/dashboard/attendance # Attendance chart data
+GET    /api/dashboard/departments # Department breakdown
+
+## Authentication Flow
+1. Client sends POST /api/auth/login with email + password
+2. Server validates, returns Sanctum token
+3. Client stores token, sends in Authorization: Bearer {token}
+4. Token expires after configurable duration (default: 24h)
+5. Logout revokes token on server
+
+## Response Format
+{
+    "success": true,
+    "message": "Operation successful",
+    "data": { ... },
+    "meta": {
+        "current_page": 1,
+        "per_page": 15,
+        "total": 100
+    }
+}
+
+## Error Response Format
+{
+    "success": false,
+    "message": "Validation failed",
+    "errors": {
+        "email": ["The email field is required."]
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Mobile README -->
+            <div class="subsection">
+                <h3 class="subsection-title">Mobile README</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>mobile_flutter/README.md</span>
+                    </div>
+                    <pre><code># HRIS Mobile App
+
+## Architecture Pattern
+MVVM (Model-View-ViewModel) with Provider state management.
+
+### Layer Breakdown
+- View (screens/): UI rendering, user interaction
+- ViewModel (providers/): Business logic, state management
+- Model (data/models/): Data structures, serialization
+- Repository (data/repositories/): API communication abstraction
+- DataSource (data/datasources/): Raw HTTP and local storage
+
+## Folder Structure Summary
+lib/
+├── core/         # Constants, utilities, error handling
+├── data/         # Models, repositories, data sources
+├── providers/    # State management (ChangeNotifier)
+├── screens/      # UI screens organized by feature
+├── widgets/      # Reusable UI components
+├── theme/        # Light/dark theme definitions
+└── routes/       # App navigation routes
+
+## API Integration
+- HTTP Client: Dio with interceptors for auth token
+- Base URL configured in core/constants/api_endpoints.dart
+- Automatic token refresh on 401 responses
+- Request/response logging in debug mode
+
+## Key Dependencies
+- provider: State management
+- dio: HTTP client
+- camera: Photo capture for attendance
+- geolocator: GPS location services
+- shared_preferences: Local token storage
+- image_picker: Photo selection fallback
+- flutter_local_notifications: Push notifications
+
+## Build Release Steps
+# Android APK
+flutter build apk --release
+
+# Android App Bundle
+flutter build appbundle --release
+
+# iOS
+flutter build ipa --release</code></pre>
+                </div>
+            </div>
+
+            <!-- Admin README -->
+            <div class="subsection">
+                <h3 class="subsection-title">Admin README</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>admin-react/README.md</span>
+                    </div>
+                    <pre><code># HRIS Admin Panel
+
+## Folder Structure
+src/
+├── components/   # Reusable UI components (Button, Modal, DataTable)
+├── layouts/      # Page layouts (MainLayout, AuthLayout)
+├── pages/        # Route-level page components
+├── hooks/        # Custom React hooks (useAuth, useFetch, useTheme)
+├── services/     # API service layer (Axios-based)
+├── context/      # React Context providers
+├── utils/        # Helper functions
+└── theme/        # Color tokens and theme config
+
+## Theme Switch Logic
+ThemeContext provides:
+- theme: 'light' | 'dark'
+- toggleTheme(): switches and persists to localStorage
+- CSS custom properties update on <html> element
+- All components use semantic token classes
+
+Implementation:
+const { theme, toggleTheme } = useTheme();
+// Components use: className="bg-surface text-on-surface"
+
+## API Service Layer
+- Central Axios instance with base URL from env
+- Request interceptor: attaches Bearer token
+- Response interceptor: handles 401 (redirect to login)
+- Each feature has its own service file (employeeService, etc.)
+
+Example:
+import api from './api';
+export const getEmployees = (params) => api.get('/employees', { params });
+export const createEmployee = (data) => api.post('/employees', data);
+
+## Build for Production
+npm run build
+# Output: build/ directory
+# Deploy to any static hosting (Nginx, Vercel, Netlify)</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- UI Guidelines Section -->
+        <section id="ui-guidelines" class="doc-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="13.5" cy="6.5" r="1.5"/>
+                        <circle cx="17.5" cy="10.5" r="1.5"/>
+                        <circle cx="8.5" cy="7.5" r="1.5"/>
+                        <circle cx="6.5" cy="12.5" r="1.5"/>
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                        <path d="M2 12h20"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">UI Design Guidelines</h2>
+                    <p class="section-description">Corporate indigo/blue theme with consistent spacing, typography, and component styling.</p>
+                </div>
+            </div>
+
+            <!-- Color Palette -->
+            <div class="grid-2">
+                <div class="info-card">
+                    <h3 class="card-title">Light Mode Colors</h3>
+                    <div class="grid-2 color-grid">
+                        <div class="color-swatch">
+                            <div class="color-preview bg-primary"></div>
+                            <div>
+                                <p class="color-name">Primary</p>
+                                <p class="color-hex">#4338CA</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-primary-hover"></div>
+                            <div>
+                                <p class="color-name">Primary Hover</p>
+                                <p class="color-hex">#3730A3</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-background border"></div>
+                            <div>
+                                <p class="color-name">Background</p>
+                                <p class="color-hex">#F8FAFC</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-surface border"></div>
+                            <div>
+                                <p class="color-name">Surface / Card</p>
+                                <p class="color-hex">#FFFFFF</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-text-primary"></div>
+                            <div>
+                                <p class="color-name">Text Primary</p>
+                                <p class="color-hex">#1E293B</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-text-secondary"></div>
+                            <div>
+                                <p class="color-name">Text Secondary</p>
+                                <p class="color-hex">#64748B</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-border"></div>
+                            <div>
+                                <p class="color-name">Border</p>
+                                <p class="color-hex">#E2E8F0</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-success"></div>
+                            <div>
+                                <p class="color-name">Success</p>
+                                <p class="color-hex">#10B981</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-warning"></div>
+                            <div>
+                                <p class="color-name">Warning</p>
+                                <p class="color-hex">#F59E0B</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-error"></div>
+                            <div>
+                                <p class="color-name">Error</p>
+                                <p class="color-hex">#EF4444</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">Dark Mode Colors</h3>
+                    <div class="grid-2 color-grid dark-mode-colors">
+                        <div class="color-swatch">
+                            <div class="color-preview bg-primary-dark"></div>
+                            <div>
+                                <p class="color-name">Primary</p>
+                                <p class="color-hex">#818CF8</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-primary-hover-dark"></div>
+                            <div>
+                                <p class="color-name">Primary Hover</p>
+                                <p class="color-hex">#6366F1</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-background-dark"></div>
+                            <div>
+                                <p class="color-name">Background</p>
+                                <p class="color-hex">#0F172A</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-surface-dark border-dark"></div>
+                            <div>
+                                <p class="color-name">Surface / Card</p>
+                                <p class="color-hex">#1E293B</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-text-primary-dark"></div>
+                            <div>
+                                <p class="color-name">Text Primary</p>
+                                <p class="color-hex">#F1F5F9</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-text-secondary-dark"></div>
+                            <div>
+                                <p class="color-name">Text Secondary</p>
+                                <p class="color-hex">#94A3B8</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-border-dark"></div>
+                            <div>
+                                <p class="color-name">Border</p>
+                                <p class="color-hex">#334155</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-success-dark"></div>
+                            <div>
+                                <p class="color-name">Success</p>
+                                <p class="color-hex">#34D399</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-warning-dark"></div>
+                            <div>
+                                <p class="color-name">Warning</p>
+                                <p class="color-hex">#FBBF24</p>
+                            </div>
+                        </div>
+                        <div class="color-swatch">
+                            <div class="color-preview bg-error-dark"></div>
+                            <div>
+                                <p class="color-name">Error</p>
+                                <p class="color-hex">#F87171</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typography -->
+            <div class="info-card">
+                <h3 class="card-title">Typography System</h3>
+                <div class="typography-grid">
+                    <div class="typo-item">
+                        <span class="typo-example text-h1">Heading 1</span>
+                        <span class="typo-meta">30px / Bold / Inter</span>
+                    </div>
+                    <div class="typo-item">
+                        <span class="typo-example text-h2">Heading 2</span>
+                        <span class="typo-meta">24px / Bold / Inter</span>
+                    </div>
+                    <div class="typo-item">
+                        <span class="typo-example text-h3">Heading 3</span>
+                        <span class="typo-meta">20px / SemiBold / Inter</span>
+                    </div>
+                    <div class="typo-item">
+                        <span class="typo-example text-body">Body text - The quick brown fox jumps over the lazy dog.</span>
+                        <span class="typo-meta">16px / Regular / Inter</span>
+                    </div>
+                    <div class="typo-item">
+                        <span class="typo-example text-secondary">Secondary text - Supporting details.</span>
+                        <span class="typo-meta">14px / Regular / Inter</span>
+                    </div>
+                    <div class="typo-item">
+                        <span class="typo-example text-mono">const code = "JetBrains Mono";</span>
+                        <span class="typo-meta">13px / Mono</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Component Styles -->
+            <div class="grid-2">
+                <div class="info-card">
+                    <h3 class="card-title">Card Style</h3>
+                    <ul class="list-disc pl-5 mb-3">
+                        <li>Background: Surface color</li>
+                        <li>Border: 1px solid border color</li>
+                        <li>Border Radius: 12px (0.75rem)</li>
+                        <li>Padding: 20px (1.25rem)</li>
+                    </ul>
+                    <div class="card-example">
+                        <p class="font-medium">Example Card</p>
+                        <p class="text-sm text-muted-foreground mt-1">This is how cards should look across the system.</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">Button Styles</h3>
+                    <ul class="list-disc pl-5 mb-3">
+                        <li>Border Radius: 8px (0.5rem)</li>
+                        <li>Padding: 10px 20px</li>
+                        <li>Font Weight: 500 (medium)</li>
+                    </ul>
+                    <div class="button-examples">
+                        <button class="btn btn-primary">Primary</button>
+                        <button class="btn btn-secondary">Secondary</button>
+                        <button class="btn btn-danger">Danger</button>
+                        <button class="btn btn-ghost">Ghost</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spacing System -->
+            <div class="info-card">
+                <h3 class="card-title">Spacing System (4px base)</h3>
+                <div class="spacing-grid">
+                    <div class="spacing-item">
+                        <div class="spacing-bar spacing-xs"></div>
+                        <div>
+                            <span class="spacing-name">xs</span>
+                            <span class="spacing-value">4px (p-1)</span>
+                        </div>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-bar spacing-sm"></div>
+                        <div>
+                            <span class="spacing-name">sm</span>
+                            <span class="spacing-value">8px (p-2)</span>
+                        </div>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-bar spacing-md"></div>
+                        <div>
+                            <span class="spacing-name">md</span>
+                            <span class="spacing-value">16px (p-4)</span>
+                        </div>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-bar spacing-lg"></div>
+                        <div>
+                            <span class="spacing-name">lg</span>
+                            <span class="spacing-value">24px (p-6)</span>
+                        </div>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-bar spacing-xl"></div>
+                        <div>
+                            <span class="spacing-name">xl</span>
+                            <span class="spacing-value">32px (p-8)</span>
+                        </div>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-bar spacing-2xl"></div>
+                        <div>
+                            <span class="spacing-name">2xl</span>
+                            <span class="spacing-value">48px (p-12)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Section -->
+        <section id="security" class="doc-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">Security Structure</h2>
+                    <p class="section-description">Multi-layered security with Sanctum authentication, role middleware, input validation, and file upload protection.</p>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="info-card">
+                    <h3 class="card-title">1. Sanctum Token Authentication</h3>
+                    <p class="mb-3">Laravel Sanctum provides lightweight API token authentication. Tokens are stored hashed in the database and sent via Bearer header.</p>
+                    <div class="code-block">
+                        <pre><code>// Login flow
+public function login(LoginRequest $request)
+{
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        throw ValidationException::withMessages([
+            'email' => ['Invalid credentials.'],
+        ]);
+    }
+
+    $token = $user->createToken('mobile-app')->plainTextToken;
+
+    return response()->json([
+        'success' => true,
+        'data' => [
+            'user' => new UserResource($user),
+            'token' => $token,
+        ],
+    ]);
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">2. Role-Based Middleware</h3>
+                    <p class="mb-3">Custom middleware checks user roles before allowing access to sensitive endpoints.</p>
+                    <div class="code-block">
+                        <pre><code>// RoleMiddleware.php
+class RoleMiddleware
+{
+    public function handle(Request $request, Closure $next, ...$roles)
+    {
+        $user = $request->user();
+
+        if (!$user || !in_array($user->role->name, $roles)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized. Insufficient permissions.'
+            ], 403);
+        }
+
+        return $next($request);
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">3. Route Protection Matrix</h3>
+                    <div class="table-responsive">
+                        <table class="security-table">
+                            <thead>
+                                <tr>
+                                    <th>Endpoint</th>
+                                    <th>Admin</th>
+                                    <th>HR</th>
+                                    <th>Manager</th>
+                                    <th>Employee</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>GET /employees</td><td>✓</td><td>✓</td><td>✓</td><td>-</td></tr>
+                                <tr><td>POST /employees</td><td>✓</td><td>✓</td><td>-</td><td>-</td></tr>
+                                <tr><td>PUT /employees/:id</td><td>✓</td><td>✓</td><td>-</td><td>-</td></tr>
+                                <tr><td>DELETE /employees/:id</td><td>✓</td><td>-</td><td>-</td><td>-</td></tr>
+                                <tr><td>POST /attendance/check-in</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+                                <tr><td>GET /attendance/report</td><td>✓</td><td>✓</td><td>✓</td><td>-</td></tr>
+                                <tr><td>PUT /leaves/:id/approve</td><td>✓</td><td>✓</td><td>✓</td><td>-</td></tr>
+                                <tr><td>GET /dashboard/stats</td><td>✓</td><td>✓</td><td>✓</td><td>-</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">4. Request Validation</h3>
+                    <p class="mb-3">All incoming data is validated using Laravel Form Request classes before reaching the controller.</p>
+                    <div class="code-block">
+                        <pre><code>// StoreEmployeeRequest.php
+class StoreEmployeeRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return in_array($this->user()->role, ['admin', 'hr']);
+    }
+
+    public function rules(): array
+    {
+        return [
+            'first_name' => 'required|string|max:100',
+            'last_name' => 'required|string|max:100',
+            'email' => 'required|email|unique:users,email',
+            'employee_no' => 'required|string|unique:employees',
+            'department_id' => 'required|exists:departments,id',
+            'position' => 'required|string|max:100',
+            'hire_date' => 'required|date|before_or_equal:today',
+        ];
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">5. File Upload Security</h3>
+                    <p class="mb-3">Attendance photos are validated for type, size, and stored outside public access with unique names.</p>
+                    <div class="code-block">
+                        <pre><code>// CheckInRequest.php validation
+'photo' => [
+    'required',
+    'image',
+    'mimes:jpeg,jpg,png',
+    'max:5120', // 5MB max
+],
+
+// Storage
+$path = $request->file('photo')->store(
+    'attendance_photos/' . now()->format('Y/m'),
+    'private'
+);</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">6. GPS Spoofing Mitigation</h3>
+                    <p class="mb-3">Multi-layer approach to detect and prevent location spoofing attempts.</p>
+                    <ul class="list-disc pl-5">
+                        <li>Check isMocked flag on Android</li>
+                        <li>Haversine distance validation</li>
+                        <li>Flag suspicious coordinate patterns</li>
+                        <li>Detect impossible travel speed</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scalability Section -->
+        <section id="scalability" class="doc-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 20V10M12 20V4M6 20v-6"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="section-title">Scalability & Production Readiness</h2>
+                    <p class="section-description">Architecture decisions and patterns designed for growth, maintainability, and enterprise deployment.</p>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="info-card">
+                    <h3 class="card-title">API Versioning</h3>
+                    <p class="mb-3">Prefix-based API versioning allows breaking changes without disrupting existing clients.</p>
+                    <div class="code-block">
+                        <pre><code>// routes/api.php
+Route::prefix('v1')->group(function () {
+    Route::post('auth/login', [AuthController::class, 'login']);
+    Route::middleware('auth:sanctum')->group(function () {
+        // v1 endpoints
+    });
+});
+
+// Future: Route::prefix('v2')->group(...)</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">Caching Strategy</h3>
+                    <p class="mb-3">Redis-backed caching for frequently accessed, rarely changed data.</p>
+                    <div class="code-block">
+                        <pre><code>// Cache department list
+Cache::remember('departments.active', 3600, function () {
+    return Department::where('is_active', true)->get();
+});
+
+// Cache dashboard stats (5 min TTL)
+Cache::remember('dashboard.stats', 300, function () {
+    return $this->dashboardService->calculateStats();
+});</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">Queue-Based Processing</h3>
+                    <p class="mb-3">Heavy tasks processed asynchronously via Laravel queues with Supervisor.</p>
+                    <div class="code-block">
+                        <pre><code>// Dispatch jobs for heavy operations
+ProcessAttendancePhoto::dispatch($attendance);
+SendLeaveNotification::dispatch($leave, $approver);
+
+// supervisor config
+[program:hris-worker]
+command=php artisan queue:work redis --sleep=3 --tries=3
+numprocs=2
+autostart=true
+autorestart=true</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">Database Optimization</h3>
+                    <p class="mb-3">Indexing strategy and query optimization for growing datasets.</p>
+                    <ul class="list-disc pl-5">
+                        <li>Eager loading to prevent N+1 queries</li>
+                        <li>Composite indexes on foreign keys</li>
+                        <li>Pagination on all list endpoints</li>
+                        <li>Chunk processing for reports</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">Horizontal Scaling Path</h3>
+                    <div class="code-block">
+                        <pre><code>Current (Single Server):
+  Nginx -> PHP-FPM -> MySQL
+
+Growth Phase 1 (Separate DB):
+  App Server → Database Server
+
+Growth Phase 2 (Load Balanced):
+  Load Balancer
+    ├── App Server 1
+    ├── App Server 2
+    └── App Server 3
+         ↓
+  Database Server (Primary + Replica)
+         ↓
+  Redis Server (Cache + Queue)</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">Monitoring & Logging</h3>
+                    <p class="mb-3">Structured logging and monitoring setup for production observability.</p>
+                    <ul class="list-disc pl-5">
+                        <li>Structured JSON logging</li>
+                        <li>Server metrics (CPU, memory, disk)</li>
+                        <li>Application errors (Sentry)</li>
+                        <li>API response times</li>
+                        <li>Queue job failures</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-card info-success">
+                <h3 class="card-title">Production Checklist</h3>
+                <div class="grid-2 checklist">
+                    <div class="checklist-item">
+                        <span class="check-bullet"></span>
+                        <span>APP_ENV=production, APP_DEBUG=false</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="check-bullet"></span>
+                        <span>Unique APP_KEY generated</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="check-bullet"></span>
+                        <span>Database credentials secured</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="check-bullet"></span>
+                        <span>CORS configured for production domains</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="check-bullet"></span>
+                        <span>SSL/TLS certificates installed</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="check-bullet"></span>
+                        <span>Rate limiting enabled on all endpoints</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="check-bullet"></span>
+                        <span>File upload size limits configured</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="check-bullet"></span>
+                        <span>Queue worker managed by Supervisor</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="check-bullet"></span>
+                        <span>Daily database backups configured</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="check-bullet"></span>
+                        <span>Log rotation enabled</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="check-bullet"></span>
+                        <span>Error monitoring service connected</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="check-bullet"></span>
+                        <span>Health check endpoint configured</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Sections (Shortened for space - full content would continue) -->
+    </main>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
